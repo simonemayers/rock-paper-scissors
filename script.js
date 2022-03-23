@@ -64,7 +64,7 @@ function playTournament(player1, player2, player3, player4, playUntil = 0){
     let champ2 = playGame(player3, player4);
     console.log(`Wow! What a game! ${champ2.name} won this round and made it to the finals!`)
     let winner = playGame(champ1, champ2);
-    console.log(`There you have it guys! World Wide Rock Paper Scissors Champion ${winner.name}! Congratulations!`)
+    console.log(`There you have it guys! World Wide Rock Paper Scissors Champion ${winner.name}! Congratulations! ${winner.name} is the world champion.`)
     return winner
 }
 
