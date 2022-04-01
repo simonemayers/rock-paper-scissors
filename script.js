@@ -68,4 +68,103 @@ function playTournament(player1, player2, player3, player4, playUntil = 0){
     return winner
 }
 
-console.log(playTournament(simone, sue, sandra, sara));
+
+let singleButton = document.querySelector("#single")
+let tournamentButton = document.querySelector("#tournament")
+
+function addActiveStatus(element){
+    return element.classList.add("active")
+}
+function removeActiveStatus(element){
+    return element.classList.remove("active")
+}
+singleButton.addEventListener("click", function(e){
+    addActiveStatus(this)
+    removeActiveStatus(tournamentButton)
+})
+tournamentButton.addEventListener("click", function(e){
+    addActiveStatus(this)
+    removeActiveStatus(singleButton)
+})
+
+let getStartedButton = document.querySelector("#get-started")
+
+function selectPlayType(){
+    let singleButtonClassList = Array.from(singleButton.classList)
+    let tournamentButtonClassList = Array.from(tournamentButton.classList)
+    if(singleButtonClassList.includes("active")){
+        console.log("Let's play a single game")
+    } else if(tournamentButtonClassList.includes("active")){
+        console.log("Start the tournament!")
+    } else {
+        console.log("Please select a play type")
+    }
+}
+
+getStartedButton.addEventListener("click", selectPlayType)
+getStartedButton.addEventListener("click", clearScreen)
+
+function clearScreen(){
+    document.querySelector(".intro-container").style.display = "none"
+}
+clearScreen()
+
+function createGameScreen(){
+    let gameContainer = document.createElement("div")
+    gameContainer.classList.add("container")
+    gameContainer.classList.add("game-container")
+    document.querySelector(".app-container").appendChild(gameContainer)
+    let playButton = document.createElement("button")
+    playButton.classList.add("btn"); 
+    playButton.classList.add("play-game-button"); 
+    playButton.innerHTML = "Play Game"
+    document.querySelector(".game-container").appendChild(playButton)
+    return gameContainer
+}
+createGameScreen()
+let playButton = document.querySelector(".play-game-button")
+
+function playGame(){
+    playButton.style.display = "none"
+
+}
+
+playButton.addEventListener("click", playGame)
+
+playGame()
+
+function createPlayerContainers(){
+    let player1Container = document.createElement("div")
+    player1Container.classList.add("player1-container")
+    document.querySelector(".game-container").appendChild(player1Container)
+    let player2Container = document.createElement("div")
+    player2Container.classList.add("player2-container")
+    document.querySelector(".game-container").appendChild(player2Container)
+}
+createPlayerContainers()
+
+
+let rock1 = document.createElement("p")
+rock1.innerHTML = "Rock"
+rock1.classList.add("rock")
+let paper1 = document.createElement("p")
+paper1.innerHTML = "Paper"
+paper1.classList.add("paper")
+let scissors1 = document.createElement("p")
+scissors1.innerHTML = "Scissors"
+scissors1.classList.add("scissors")
+
+let rock2 = document.createElement("p")
+rock2.innerHTML = "Rock"
+rock2.classList.add("rock")
+let paper2 = document.createElement("p")
+paper2.innerHTML = "Paper"
+paper2.classList.add("paper")
+let scissors2 = document.createElement("p")
+scissors2.innerHTML = "Scissors"
+scissors2.classList.add("scissors")
+
+document.querySelector(".player1-container").appendChild(rock1)
+document.querySelector(".player2-container").appendChild(rock2)
+
+
