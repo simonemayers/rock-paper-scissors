@@ -53,103 +53,121 @@ function selectPlayType(){
     }
 }
 
-getStartedButton.addEventListener("click", selectPlayType)
-getStartedButton.addEventListener("click", clearScreen)
-
 function clearScreen(){
     document.querySelector(".intro-container").style.display = "none"
 }
-clearScreen()
 
 function createGameScreen(){
     let gameContainer = document.createElement("div")
     gameContainer.classList.add("container")
     gameContainer.classList.add("game-container")
     document.querySelector(".app-container").appendChild(gameContainer)
+    
+    let player1Container = document.createElement("div")
+    player1Container.classList.add("player1-container")
+    document.querySelector(".game-container").appendChild(player1Container)
+
     let playButton = document.createElement("button")
     playButton.classList.add("btn"); 
     playButton.classList.add("play-game-button"); 
     playButton.innerHTML = "Play Game"
     document.querySelector(".game-container").appendChild(playButton)
-    return gameContainer
-}
-createGameScreen()
-let playButton = document.querySelector(".play-game-button")
 
-function startGame(){
-    playButton.style.display = "none"
 
-}
-
-playButton.addEventListener("click", startGame)
-
-startGame()
-
-function createPlayerContainers(){
-    let player1Container = document.createElement("div")
-    player1Container.classList.add("player1-container")
-    document.querySelector(".game-container").appendChild(player1Container)
     let player2Container = document.createElement("div")
     player2Container.classList.add("player2-container")
     document.querySelector(".game-container").appendChild(player2Container)
+
+    return gameContainer
 }
-createPlayerContainers()
+
+function createGameScreenContent(){
+    let rpsText1 = document.createElement("p")
+    rpsText1.classList.add("rps-text")
+    rpsText1.id = "rps-text1"
+    let player1Container = document.querySelector(".player1-container")
+    
+    let rpsText2 = document.createElement("p")
+    rpsText2.classList.add("rps-text")
+    rpsText2.id = "rps-text2"
+    let player2Container = document.querySelector(".player2-container")
+    
+    player1Container.appendChild(rpsText1)
+    player2Container.appendChild(rpsText2)
+    
+    let p1RoundResult = document.createElement("p")
+    p1RoundResult.classList.add("round-result")
+    document.querySelector(".player1-container").appendChild(p1RoundResult)
+
+    let p2RoundResult = document.createElement("p")
+    p2RoundResult.classList.add("round-result")
+    document.querySelector(".player2-container").appendChild(p2RoundResult)
+
+
+}
+
+getStartedButton.addEventListener("click", selectPlayType)
+getStartedButton.addEventListener("click", clearScreen)
+getStartedButton.addEventListener("click", createGameScreen)
+getStartedButton.addEventListener("click", createGameScreenContent)
 
 
 
 
-let rpsText1 = document.createElement("p")
-rpsText1.classList.add("rps-text")
-rpsText1.id = "rps-text1"
-let player1Container = document.querySelector(".player1-container")
 
-let rpsText2 = document.createElement("p")
-rpsText2.classList.add("rps-text")
-rpsText2.id = "rps-text2"
-let player2Container = document.querySelector(".player2-container")
 
-player1Container.appendChild(rpsText1)
-player2Container.appendChild(rpsText2)
 
-let displayRPS = (weapon) => {
+function displayRPS (weapon) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             Array.from(document.querySelectorAll(".rps-text")).map(m => m.innerHTML = weapon)
             resolve()
-        }, 2000)
+        }, 1000)
     })
 }
 
-displayRPS("Rock")
-.then(() => displayRPS("Paper"))
-.then(() => displayRPS("Scissors"))
-.then(() => displayRPS(""))
-.then(() => {
-    // let shootText = document.createElement("h2")
-    // document.querySelector(".game-container").prepend(shootText)
-    // shootText.classList.add("shoot-text")
-    // shootText.innerHTML = "SHOOT"
-    let roundResult = playRound(simone, sue)
-})
+let winnerText = document.createElement("h3")
+winnerText.classList.add("winner-text")
 
-console.log(roundResult)
+let tieText1 = document.createElement("h3")
+tieText1.classList.add("tie-text")
 
-let p1RoundResult = document.createElement("p")
-p1RoundResult.classList.add("round-result")
-document.querySelector(".player1-container").appendChild(p1RoundResult)
+let tieText2 = document.createElement("h3")
+tieText2.classList.add("tie-text")
 
 function playRound(p1, p2){
+    let p1RoundResult = document.querySelector(".player1-container").querySelector(".round-result")
+    let p2RoundResult = document.querySelector(".player2-container").querySelector(".round-result")
+    
+    
+    let p1Container = document.querySelector(".player1-container")
+    let p2Container = document.querySelector(".player2-container")
+    
     let h1 = hands[p1.getHandMethod()];
     let h2 = hands[p2.getHandMethod()];
     console.log(`${p1.name} played ${h1}. `, `${p2.name} played ${h2}.`)
     if((h1 === "rock" && h2 === "paper")||(h1 === "paper" && h2 === "scissors") || (h1==="scissors" && h2 === "rock")){
-        p1RoundResult.innerHTML = `${h2} beats ${h1}, ${p2.name} wins!`
+        let result = `${h2} beats ${h1}, ${p2.name} wins!`
+        p1RoundResult.innerHTML = h1.toUpperCase()
+        p2RoundResult.innerHTML = h2.toUpperCase();
+        winnerText.innerHTML = "Winner"
+        p2Container.prepend(winnerText);
         return p2; 
     } else if((h2 === "rock" && h1 === "paper")||(h2 === "paper" && h1 === "scissors") || (h2==="scissors" && h1 === "rock")){
+        p1RoundResult.innerHTML = h1.toUpperCase()
+        p2RoundResult.innerHTML = h2.toUpperCase()
         console.log(`${h1} beats ${h2}, ${p1.name} wins!`)
+        winnerText.innerHTML = "Winner"
+        p1Container.prepend(winnerText);
         return p1; 
     } else {
         console.log("It's a tie"); 
+        p1RoundResult.innerHTML = h1.toUpperCase()
+        p2RoundResult.innerHTML = h2.toUpperCase()
+        tieText1.innerHTML = "Tie!"
+        tieText2.innerHTML = "Tie!"
+        p1Container.prepend(tieText1);
+        p2Container.prepend(tieText2);
         return null; 
     }
 }
@@ -184,3 +202,40 @@ function playTournament(player1, player2, player3, player4, playUntil = 0){
     console.log(`There you have it guys! World Wide Rock Paper Scissors Champion ${winner.name}! Congratulations! ${winner.name} is the world champion.`)
     return winner
 }
+
+let playButton = document.querySelector(".play-game-button")
+
+function resetGame(){
+    if(document.querySelector(".winner-text") && document.querySelector(".tie-text")){
+        Array.from(document.querySelectorAll(".round-result")).map(m => m.innerHTML = "")
+        document.querySelector(".winner-text").innerHTML = ""
+        Array.from(document.querySelectorAll(".tie-text")).map(m => m.innerHTML = "")
+
+    }
+    else if(document.querySelector(".winner-text")){
+        document.querySelector(".winner-text").innerHTML = ""
+    Array.from(document.querySelectorAll(".round-result")).map(m => m.innerHTML = "")
+    }
+    // else if(document.querySelector(".round-result")){
+
+    // } 
+    else if(document.querySelector(".tie-text")){
+        Array.from(document.querySelectorAll(".tie-text")).map(m => m.innerHTML = "")
+        
+    }
+}
+
+async function testOut(){
+    await resetGame()
+    await displayRPS("Rock")
+    await displayRPS("Paper")
+    await displayRPS("Scissors")
+    await displayRPS("")
+    await playRound(sue, simone)
+}
+
+document.querySelector(".app-container").addEventListener("click", function(e){
+    if(e.target.className.includes("play-game-button")){
+        testOut()
+    }
+})
