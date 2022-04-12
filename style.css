@@ -120,12 +120,13 @@ h1 {
 }
 
 .weapon-container img{
-    width: 3em;
     background-color: transparent;
+    width: 100%;
     color: white;
 }
 
 .weapon-container button{
+    width: 35%;
     background-color: transparent;
     border-width: 0px;
 }
@@ -145,9 +146,12 @@ h1 {
     display: flex;
     justify-content: center;
 }
-
+.player2-container.weapon-container{
+    display: flex;
+    align-items: flex-start;
+}
 .api-icon.btn{
-    width: 25%;
+    width: 30%;
     padding: 0%;
     margin: 5%;
 }
@@ -155,5 +159,10 @@ h1 {
 #weapon-intro{
     padding: 0%;
     margin-bottom: 0%;
+    padding-top: 10%;
+}
+
+#api-weapon-intro{
+    margin: 0%;
     padding-top: 10%;
 }

@@ -138,6 +138,11 @@ function createGameScreenContent(){
             weaponIntro.innerHTML = "Choose A Weapon"
             i.parentNode.appendChild(weaponIntro)
 
+            let apiWeaponIntro = document.createElement("p")
+            apiWeaponIntro.id = "api-weapon-intro"
+            apiWeaponIntro.innerHTML = "API Weapon"
+            document.querySelector(".player2-container").appendChild(apiWeaponIntro)
+
             let weaponContainer = document.createElement("div")
             weaponContainer.classList.add("weapon-container")
             i.parentNode.appendChild(weaponContainer)
@@ -443,8 +448,8 @@ document.querySelector(".app-container").addEventListener("click", function(e){
 })
 
 function goBack(){
-    document.querySelector(".game-container").style.display = "none"; 
     document.querySelector(".intro-container").style.display = "block"
+    document.querySelector(".game-container").remove(); 
 }
 
 document.querySelector(".app-container").addEventListener("click", function (e){
